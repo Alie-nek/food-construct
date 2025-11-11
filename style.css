@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    padding: 20px;
+}
+
+header h1{
+    margin-bottom: 15px;
+    font-size: 45px;
+}
+
+nav ul{
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+nav a{
+    color: #000000;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover{
+    color:#37cd48;
+}
+
+nav a.active{
+    color:#37cd48; 
+}
+
+main{
+    flex: 1;
+    padding: 20px;
+}
+
+section{
+    margin-bottom: 30px;
+}
+
+h2{
+    margin-bottom: 15px;
+    font-size: 28px;
+}
+
+img{
+    width: calc(100% - 40px);
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+p{
+    text-indent: 30px;
+    text-align: justify;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+#advantages ul{
+    list-style-position: inside;
+}
+
+#advantages li{
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+table{
+    width: 100%;
+    border: 2px solid;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid;
+    padding: 12px;
+    text-align: center;
+}
+
+th{
+    font-weight: bold;
+}
+
+footer{
+    background-color: black;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+}
+
+@media (max-width: 800px) {
+    img {
+        width: 500px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    nav ul {
+        justify-content: space-between; 
+    }
+    
+    header h1 {
+        text-align: center; 
+    }
+}
+
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column; 
+        align-items: center; 
+    }
+    
+    nav a {
+        font-size: 22px; 
+    }
+    
+    img {
+        width: 100%; 
+    }
+
+     table {
+        font-size: 14px; 
+    }
+}
+
+@media (max-width: 400px) {
+    table {
+        font-size: 12px; 
+    }
+    
+    th, td {
+        padding: 8px; 
+    }
+}
