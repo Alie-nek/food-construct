@@ -61,6 +61,84 @@
     font-weight: bold;
 }
 
+#forms{
+    margin-left: 20px;
+}
+
+#forms h2{
+    text-align: center;
+    font-size: 30px;
+}
+
+#forms h3{
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+#form{
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#form label {
+    font-size: 18px;
+    font-weight:bold;
+}
+
+#form small{
+    margin-top: -5px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+#order{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#client{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#form select, #form input[type="text"], #form input[type="email"], #form input[type="tel"], #form input[type="time"] {
+    height: 40px;
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#form textarea{
+    height: 90px;
+    width: 300px;
+    padding: 10px; 
+}
+
+#form button{
+    height: 30px;
+    width: 140px;
+    border-radius: 8px;
+    border-width: 2px;
+    background-color: #ffffff;
+}
+
+#form button:hover{
+    background-color: #e0dddd;
+}
+
+#buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
 @media (max-width: 800px) {
     .dishes{
         grid-template-columns: repeat(2, 1fr); 
@@ -73,10 +151,11 @@
     header h1 {
         text-align: center; 
     }
+
 }
 
 @media (max-width: 600px) {
-    .dishes{
+    #form, .dishes{
         grid-template-columns: 1fr; 
     }
     
@@ -91,5 +170,9 @@
     
     h2 {
         text-align: center; 
+    }
+
+    #buttons{
+        justify-content: center;
     }
 }
