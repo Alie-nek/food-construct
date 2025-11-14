@@ -38,6 +38,20 @@ nav a{
     transition: color 0.3s ease;
 }
 
+#contacts a{
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#contacts a:hover{
+    color:#37cd48;
+}
+
+#contacts a.active{
+    color:#37cd48; 
+}
+
 nav a:hover{
     color:#37cd48;
 }
