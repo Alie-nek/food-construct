@@ -6,6 +6,10 @@
         <title>Food Construct - доставка бизнес-ланчей в Москве</title>
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="stylesformake.css">
+        <script src="database.js" defer></script>
+        <script src="displayDishes.js" defer></script>
+        <script src="orderManager.js" defer></script>
+        <script src="filters.js" defer></script>
     </head>
     <body>
         <header>
@@ -22,81 +26,52 @@
         <main>
             <section id="soups">
                 <h2>Выберите суп</h2>
-                <div id="firstdish" class="dishes">
-                    <div id="gaspacho" class="dish-card">
-                        <img src="images/gaspacho.jpg" alt="Вкуснейший испанский суп к вашему столу">
-                        <p class="price">195 ₽</p>
-                        <p class="name">Гаспачо</p>
-                        <p class="weight">350 г</p>
-                        <button>Добавить</button>
-                    </div>
-                    <div id="mushroom" class="dish-card">
-                        <img src="images/mushroom.jpeg" alt="Вкуснейший грибной суп к вашему столу">
-                        <p class="price">185 ₽</p>
-                        <p class="name">Грибной суп</p>
-                        <p class="weight">330 г</p>
-                        <button>Добавить</button>
-                    </div>
-                    <div id="norway" class="dish-card">
-                        <img src="images/norway.jpg" alt="Вкуснейший Норвежский суп к вашему столу">
-                        <p class="price">270 ₽</p>
-                        <p class="name">Норвежский суп</p>
-                        <p class="weight">330 г</p>
-                        <button>Добавить</button>
-                    </div>
+                <div class="filters">
+                <button class="filter-btn" data-kind="fish">рыбный</button>
+                <button class="filter-btn" data-kind="meat">мясной</button>
+                <button class="filter-btn" data-kind="veg">вегетарианский</button>       
+            </div>
+            <div id="firstdish" class="dishes">
                 </div>
             </section>
             <section id="maincourse">
                 <h2>Выберите главное блюдо</h2>
+                <div class="filters">
+                <button class="filter-btn" data-kind="fish">рыбное</button>
+                <button class="filter-btn" data-kind="meat">мясное</button>
+                <button class="filter-btn" data-kind="veg">вегетарианское</button>
+            </div>
                 <div id="secondtdish" class="dishes">
-                    <div id="potato" class="dish-card">
-                        <img src="images/potato.jpg" alt="Вкуснейшая жареная картошка с грибами к вашему столу">
-                        <p class="price">150 ₽</p>
-                        <p class="name">Жареная картошка с грибами</p>
-                        <p class="weight">250 г</p>
-                        <button>Добавить</button>
-                    </div>
-                    <div id="lasagna" class="dish-card">
-                        <img src="images/lasagna.jpeg" alt="Вкуснейшая лазанья к вашему столу">
-                        <p class="price">385 ₽</p>
-                        <p class="name">Лазанья</p>
-                        <p class="weight">310 г</p>
-                        <button>Добавить</button>
-                    </div>
-                    <div id="cutlet" class="dish-card">
-                        <img src="images/cutlet.png" alt="Вкуснейшие котлеты из курицы с картофельным пюре к вашему столу">
-                        <p class="price">225 ₽</p>
-                        <p class="name">Котлеты из курицы с картофельным пюре</p>
-                        <p class="weight">280 г</p>
-                        <button>Добавить</button>
-                    </div>
+                    
                 </div>
             </section>
+            <section id="salads">
+            <h2>Выберите салат или стартер</h2>
+            <div class="filters">
+                <button class="filter-btn" data-kind="fish">рыбный</button>
+                <button class="filter-btn" data-kind="meat">мясной</button>
+                <button class="filter-btn" data-kind="veg">вегетарианский</button>
+            </div>
+            <div id="salads-block" class="dishes"></div>
+        </section>
             <section id="drinks-container">
                 <h2>Выберите напиток</h2>
+                <div class="filters">
+                <button class="filter-btn" data-kind="cold">холодный</button>
+                <button class="filter-btn" data-kind="hot">горячий</button>
+            </div>
                 <div id="drinks-block" class="dishes">
-                    <div id="orange" class="dish-card">
-                        <img src="images/orange.jpg" alt="Вкуснейший апельсиновый сок к вашему столу">
-                        <p class="price">120 ₽</p>
-                        <p class="name">Апельсиновый сок</p>
-                        <p class="weight">300 мл</p>
-                        <button>Добавить</button>
-                    </div>
-                    <div id="apple" class="dish-card">
-                        <img src="images/apple.jpg" alt="Вкуснейший яблочный сок к вашему столу">
-                        <p class="price">90 ₽</p>
-                        <p class="name">Яблочный сок</p>
-                        <p class="weight">300 мл</p>
-                        <button>Добавить</button>
-                    </div>
-                    <div id="carrot" class="dish-card">
-                        <img src="images/carrrot.jpeg" alt="Вкуснейший морковный сок к вашему столу">
-                        <p class="price">110 ₽</p>
-                        <p class="name">Морковный сок</p>
-                        <p class="weight">300 мл</p>
-                        <button>Добавить</button>
-                    </div>
+                    
                 </div>
+            </section>
+            <section id="desserts">
+                <h2>Выберите десерт</h2>
+                <div class="filters">
+                    <button class="filter-btn" data-kind="small">маленькая порция</button>
+                    <button class="filter-btn" data-kind="midle">средняя порция</button>
+                    <button class="filter-btn" data-kind="big">большая порция</button>
+                </div>
+                <div id="desserts-block" class="dishes"></div>
             </section>
         </main>
         <section id="forms">
@@ -105,29 +80,44 @@
             <div id="form">
                 <div id="order">
                     <h3>Ваш заказ</h3>
-                    <label for="soup">Суп</label>
-                    <select id="soup" name="soup" required>
-                        <option value="">--Выберите суп--</option>
-                        <option value="gaspacho">Гаспачо</option>
-                        <option value="mushrooms">Грибной суп</option>
-                        <option value="norway">Норвежский суп</option>
-                    </select>
-                    <label for="course">Главное блюдо</label>
-                    <select id="course" name="course" required>
-                        <option value="">--Выберите главное блюдо--</option>
-                        <option value="potato">Жаренная картошка с грибами</option>
-                        <option value="lasagna">Лазанья</option>
-                        <option value="cutlet">Котлеты из курицы с картофельным пюре</option>
-                    </select>
-                     <label for="drink">Напиток</label>
-                    <select id="drink" name="drink" required>
-                        <option value="">--Выберите напиток--</option>
-                        <option value="orange">Апельсиновый сок</option>
-                        <option value="apple">Яблочный сок</option>
-                        <option value="carrot">Морковный сок</option>
-                    </select>
-                   <label for="comment">Комментарии к заказу</label>
-                    <textarea id="comment" name="comment"> </textarea>
+                    <div id="order-summary">
+                        <div id="no-selection-message" class="no-selection">
+                            Ничего не выбрано
+                        </div>
+                        
+                        <div id="soup-category" class="order-category">
+                            <label>Суп</label>
+                            <div id="soup-selected" class="selected-dish"></div>
+                        </div>
+                        
+                        <div id="main-category" class="order-category">
+                            <label>Главное блюдо</label>
+                            <div id="main-selected" class="selected-dish"></div>
+                        </div>
+
+                        <div id="salad-category" class="order-category">
+                            <label>Салат или стартер</label>
+                            <div id="salad-selected" class="selected-dish"></div>
+                        </div>
+                        
+                        <div id="drink-category" class="order-category">
+                            <label>Напиток</label>
+                            <div id="drink-selected" class="selected-dish"></div>
+                        </div>
+                        
+                        <div id="dessert-category" class="order-category">
+                            <label>Десерт</label>
+                            <div id="dessert-selected" class="selected-dish"></div>
+                        </div>
+
+                        <div id="total-price-section" class="total-price">
+                            <h4>Стоимость заказа</h4>
+                            <div id="total-amount" class="total-amount">0 ₽</div>
+                        </div>
+                    </div>
+                    
+                    <label for="comment">Комментарии к заказу</label>
+                    <textarea id="comment" name="comment"></textarea>
                 </div>
                 <div id="client">
                     <h3>Ваши данные</h3>
