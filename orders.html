@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Construct - История заказов</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylesformake.css">
+    <script src="database.js" defer></script>
+    <script src="orders.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Food Construct</h1>
+        <nav>
+            <ul>
+                <li><a href="leanding.html"><b>Главная</b></a></li>
+                <li><a href="index.html"><b>О нас</b></a></li>
+                <li><a href="makeorder.html"><b>Собрать заказ</b></a></li>
+                <li><a href="checkout.html"><b>Оформить заказ</b></a></li>
+                <li><a href="orders.html" class="active"><b>Заказы</b></a></li>
+                <li><a href="#contacts"><b>Контакты</b></a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="orders-history">
+            <h2>История заказов</h2>
+            
+            <div id="loading-message" class="loading">
+                <p>Загрузка заказов...</p>
+            </div>
+            
+            <div id="no-orders-message" class="no-orders" style="display: none;">
+                <p>У вас пока нет заказов. <a href="makeorder.html">Сделайте первый заказ</a></p>
+            </div>
+            
+            <div class="orders-container">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Дата оформления</th>
+                            <th>Состав заказа</th>
+                            <th>Стоимость</th>
+                            <th>Время доставки</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div id="order-details-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Детали заказа</h3>
+            <div id="order-details-content">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-ok">Ок</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-order-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Редактирование заказа</h3>
+            <form id="edit-order-form">
+                <div class="form-section">
+                    <h4>Ваши данные</h4>
+                    <label for="edit-full_name">Имя</label>
+                    <input type="text" id="edit-full_name" name="full_name" required>
+                    
+                    <label for="edit-email">Email</label>
+                    <input type="email" id="edit-email" name="email" required>
+                    
+                    <label for="edit-phone">Номер телефона</label>
+                    <input type="tel" id="edit-phone" name="phone" required>
+                    
+                    <label for="edit-subscribe">
+                        <input type="checkbox" id="edit-subscribe" name="subscribe">
+                        Получать информацию о скидках и акциях
+                    </label>
+                </div>
+
+                <div class="form-section">
+                    <h4>Доставка</h4>
+                    <label for="edit-delivery_address">Адрес доставки</label>
+                    <input type="text" id="edit-delivery_address" name="delivery_address" required>
+                    
+                    <label>Время доставки:</label>
+                    <label for="edit-delivery_now">
+                        <input type="radio" id="edit-delivery_now" name="delivery_type" value="now" required>
+                        Как можно скорее
+                    </label>
+                    <label for="edit-delivery_by_time">
+                        <input type="radio" id="edit-delivery_by_time" name="delivery_type" value="by_time" required>
+                        К указанному времени
+                    </label>
+                    
+                    <div id="edit-time-selection" style="display: none;">
+                        <label for="edit-delivery_time">Укажите время доставки</label>
+                        <input type="time" id="edit-delivery_time" name="delivery_time" min="07:00" max="23:00" step="300">
+                        <small>Доступное время для доставки с 7:00 до 23:00</small>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <label for="edit-comment">Комментарии к заказу</label>
+                    <textarea id="edit-comment" name="comment"></textarea>
+                </div>
+
+                <input type="hidden" id="edit-order-id">
+                
+                <div class="modal-buttons">
+                    <button type="submit" class="btn-save">Сохранить</button>
+                    <button type="button" class="btn-cancel">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="delete-order-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Удаление заказа</h3>
+            <p>Вы уверены, что хотите удалить этот заказ?</p>
+            <div class="modal-buttons">
+                <button class="btn-confirm-delete">Да</button>
+                <button class="btn-cancel-delete">Отмена</button>
+            </div>
+            <input type="hidden" id="delete-order-id">
+        </div>
+    </div>
+    
+    <footer id="contacts">
+        <p>Позвонить нам <a href="tel:+7-000-000-00-00"> +7-000-000-00-00</a></p>
+    </footer>
+</body>
+</html>

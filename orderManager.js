@@ -1,109 +1,141 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let currentOrder = {
-        soup: null,
-        main: null,
-        salad: null,
-        drink: null,
-        desert: null
-    };
+    console.log('OrderManager loaded');
     
-    const orderSummary = document.getElementById('order-summary');
-    const noSelectionMessage = document.getElementById('no-selection-message');
-    const soupCategory = document.getElementById('soup-category');
-    const mainCategory = document.getElementById('main-category');
-    const saladCategory = document.getElementById('salad-category');
-    const drinkCategory = document.getElementById('drink-category');
-    const dessertCategory = document.getElementById('dessert-category');
-    const soupSelected = document.getElementById('soup-selected');
-    const mainSelected = document.getElementById('main-selected');
-    const saladSelected = document.getElementById('salad-selected');
-    const drinkSelected = document.getElementById('drink-selected');
-    const dessertSelected = document.getElementById('dessert-selected');
-    const totalPriceSection = document.getElementById('total-price-section');
-    const totalAmount = document.getElementById('total-amount');
-    
+    if (window.dishes && window.dishes.length > 0) {
+        initializeOrderManager();
+    } else {
+        window.addEventListener('dishesLoaded', initializeOrderManager);
+        const checkDishes = setInterval(() => {
+            if (window.dishes && window.dishes.length > 0) {
+                clearInterval(checkDishes);
+                initializeOrderManager();
+            }
+        }, 100);
+    }
+});
+
+function initializeOrderManager() {
+    console.log('Инициализация orderManager с блюдами:', window.dishes.length);
+    loadOrderFromStorage();
+    updateFloatingPanel();
+    highlightSelectedDishes();
+    setupEventListeners();
+}
+
+function loadOrderFromStorage() {
+    const savedOrder = localStorage.getItem('foodConstructOrder');
+    if (savedOrder) {
+        window.currentOrder = JSON.parse(savedOrder);
+        console.log('Загружен заказ из localStorage:', window.currentOrder);
+    } else {
+        window.currentOrder = {
+            soup: null,
+            main: null,
+            salad: null,
+            drink: null,
+            desert: null
+        };
+    }
+}
+
+function saveOrderToStorage() {
+    localStorage.setItem('foodConstructOrder', JSON.stringify(window.currentOrder));
+}
+
+function setupEventListeners() {
     document.addEventListener('click', function(e) {
         if (e.target.tagName === 'BUTTON' && e.target.textContent === 'Добавить') {
             const dishCard = e.target.closest('.dish-card');
             if (dishCard) {
                 const dishKeyword = dishCard.getAttribute('data-dish');
-                const dish = dishes.find(d => d.keyword === dishKeyword);
+                const dish = window.dishes.find(d => d.keyword === dishKeyword);
                 
                 if (dish) {
                     addToOrder(dish);
-                    updateOrderDisplay();
-                    updateTotalPrice();
+                    updateFloatingPanel();
+                    saveOrderToStorage();
+                    highlightSelectedDishes();
+                } else {
+                    console.log('Блюдо не найдено по keyword:', dishKeyword);
                 }
             }
         }
     });
+}
+
+function addToOrder(dish) {
+    window.currentOrder[dish.category] = dish.id;
+    console.log('Добавлено в заказ:', dish.name, 'ID:', dish.id, 'Категория:', dish.category);
+}
+
+function updateFloatingPanel() {
+    const floatingPanel = document.getElementById('floating-order-panel');
+    const floatingTotal = document.getElementById('floating-total');
+    const checkoutBtn = document.getElementById('floating-checkout-btn');
     
-    function addToOrder(dish) {
-        currentOrder[dish.category] = dish;
-    }
+    if (!floatingPanel || !floatingTotal || !checkoutBtn) return;
     
-    function updateOrderDisplay() {
-        const hasAnySelection = Object.values(currentOrder).some(item => item !== null);
-        
-        noSelectionMessage.style.display = hasAnySelection ? 'none' : 'block';
-        
-        updateCategoryDisplay('soup', soupCategory, soupSelected, 'Блюдо не выбрано');
-        updateCategoryDisplay('main', mainCategory, mainSelected, 'Блюдо не выбрано');
-        updateCategoryDisplay('salad', saladCategory, saladSelected, 'Блюдо не выбрано');
-        updateCategoryDisplay('drink', drinkCategory, drinkSelected, 'Напиток не выбран');
-        updateCategoryDisplay('desert', dessertCategory, dessertSelected, 'Десерт не выбран');
-        
-        soupCategory.style.display = hasAnySelection ? 'block' : 'none';
-        mainCategory.style.display = hasAnySelection ? 'block' : 'none';
-        saladCategory.style.display = hasAnySelection ? 'block' : 'none';
-        drinkCategory.style.display = hasAnySelection ? 'block' : 'none';
-        dessertCategory.style.display = hasAnySelection ? 'block' : 'none';
-    }
+    let total = 0;
+    let hasItems = false;
     
-    function updateCategoryDisplay(category, categoryElement, selectedElement, emptyText) {
-        const dish = currentOrder[category];
-        
-        if (dish) {
-            selectedElement.innerHTML = `
-                <span class="selected-dish-name">${dish.name}</span>
-                <span class="selected-dish-price">${dish.price} ₽</span>
-            `;
-        } else {
-            selectedElement.innerHTML = `
-                <span class="no-dish-text">${emptyText}</span>
-            `;
-        }
-    }
-    
-    function updateTotalPrice() {
-        let total = 0;
-        Object.values(currentOrder).forEach(dish => {
+    Object.values(window.currentOrder).forEach(dishId => {
+        if (dishId) {
+            const dish = window.dishes.find(d => d.id == dishId);
             if (dish) {
                 total += dish.price;
+                hasItems = true;
             }
-        });
-        
-        if (total > 0) {
-            totalAmount.textContent = `${total} ₽`;
-            totalPriceSection.style.display = 'block';
-        } else {
-            totalPriceSection.style.display = 'none';
         }
+    });
+    
+    floatingTotal.textContent = `${total} ₽`;
+    
+    if (hasItems) {
+        floatingPanel.classList.add('visible');
+    } else {
+        floatingPanel.classList.remove('visible');
     }
     
-    
-    
-    function getCategoryTitle(category) {
-        const titles = {
-            'soup': 'суп',
-            'main': 'главное блюдо', 
-            'salad': 'салат',
-            'drink': 'напиток',
-            'desert': 'десерт'
+    const isValidCombo = validateOrderCombo(window.currentOrder);
+    if (isValidCombo) {
+        checkoutBtn.classList.remove('disabled');
+        checkoutBtn.onclick = null;
+    } else {
+        checkoutBtn.classList.add('disabled');
+        checkoutBtn.onclick = (e) => {
+            e.preventDefault();
+            const notificationType = getNotificationType(window.currentOrder);
+            showNotification(notificationType);
         };
-        return titles[category] || '';
     }
+}
+
+function highlightSelectedDishes() {
+    if (!window.dishes || window.dishes.length === 0) return;
     
-    updateOrderDisplay();
-    updateTotalPrice();
-});
+    document.querySelectorAll('.dish-card').forEach(card => {
+        card.classList.remove('selected');
+        const button = card.querySelector('button');
+        if (button) {
+            button.textContent = 'Добавить';
+            button.style.background = '';
+        }
+    });
+    
+    Object.entries(window.currentOrder).forEach(([category, dishId]) => {
+        if (dishId) {
+            const dish = window.dishes.find(d => d.id == dishId);
+            if (dish) {
+                const dishCard = document.querySelector(`[data-dish="${dish.keyword}"]`);
+                if (dishCard) {
+                    dishCard.classList.add('selected');
+                    const button = dishCard.querySelector('button');
+                    if (button) {
+                        button.textContent = 'Выбрано';
+                        button.style.background = '#4CAF50';
+                    }
+                }
+            }
+        }
+    });
+}
